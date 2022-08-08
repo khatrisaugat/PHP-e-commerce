@@ -1,4 +1,8 @@
 <?php
+include("indexing.php");
+if(isset($_GET['indexing']) && $_GET['indexing']==1){
+    Indexing($obj);
+}
 $joinStatement=" JOIN sub_categories ON products.sub_cat_id=sub_categories.sub_cat_id";
 $joinStatement.=" JOIN categories ON sub_categories.cat_id=categories.cat_id";
 $joinStatement.=" JOIN images ON products.featured_image_id=images.image_id";
@@ -20,7 +24,7 @@ if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action']=='d'){
 <div class="container">
     <div class="col-sm-12">
     <h3>View Products</h3>
-
+    <a class="btn btn-danger" href="display_products?indexing=1">Index products</a>
         <table class="table table-bordered table-responsive table-striped ">
             <thead>
                 <tr>
@@ -49,9 +53,9 @@ if(isset($_GET['id']) && isset($_GET['action']) && $_GET['action']=='d'){
                     <td><?= $product['sub_cat_title']; ?></td>
                     <td><?= $product['cat_title']; ?></td>
                     <td>
-                        <a href="edit_products.php?id=<?= $product['pid']; ?>">Edit</a>
-                        <a href="display_products.php?id=<?= $product['pid']; ?>&action=d">Delete</a>
-                        <a href="add_options_to_products?id=<?=$product['pid'];?>">Add Options</a>
+                        <a class="btn btn-primary" href="edit_products.php?id=<?= $product['pid']; ?>">Edit</a>
+                        <a class="btn btn-danger" href="display_products.php?id=<?= $product['pid']; ?>&action=d">Delete</a>
+                        <a class="btn btn-warning" href="add_options_to_products?id=<?=$product['pid'];?>">Add Options</a>
                     </td>
                 </tr>
                 <?php } ?>

@@ -1,4 +1,5 @@
 <?php
+include('indexing.php');
 $sub_categories=$obj->select("sub_categories");
 //insert data
 if (isset($_POST['submit'])) {
@@ -32,6 +33,7 @@ if (isset($_POST['submit'])) {
     foreach($images as $image){
         $obj->Insert("product_images",array("pid"=>$id,"image_id"=>$image));
     }
+    Indexing($obj);
     if ($id) {
         $_SESSION['message'] = "Product Successfully added";
     } else{

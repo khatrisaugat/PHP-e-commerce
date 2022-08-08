@@ -3,7 +3,14 @@ if(!isset($_GET['search'])){
     echo "<script>window.location.href='home.php'</script>";
 }
 $limit=8;
-$searchResultsCount=$obj->Query("SELECT products.pid FROM `products` JOIN images ON images.image_id=products.featured_image_id JOIN `sub_categories` ON sub_categories.sub_cat_id=products.sub_cat_id WHERE product_name LIKE '%{$_GET['search']}%' OR  `sub_cat_title` LIKE '%{$_GET['search']}%' OR `sub_cat_desc` LIKE '%{$_GET['search']}%' GROUP BY products.pid");
+$searchQuery=explode(" ",$_GET['search']);
+$searchString="";
+foreach ($searchQuery as $query) {
+    $searchString.=metaphone($query)." ";
+}
+// $searchResultsCount=$obj->Query("SELECT products.pid FROM `products` JOIN images ON images.image_id=products.featured_image_id JOIN `sub_categories` ON sub_categories.sub_cat_id=products.sub_cat_id WHERE product_name LIKE '%{$_GET['search']}%' OR  `sub_cat_title` LIKE '%{$_GET['search']}%' OR `sub_cat_desc` LIKE '%{$_GET['search']}%' GROUP BY products.pid");
+$searchResultsCount=$obj->Query("SELECT products.pid FROM `products` JOIN images ON images.image_id=products.featured_image_id WHERE indexing LIKE '%{$searchString}%' GROUP BY products.pid");
+
 $totalResults=count($searchResultsCount);
 $total_pages = ceil ($totalResults / $limit);  
 if (!isset ($_GET['page']) ) {  
@@ -18,7 +25,9 @@ if (!isset ($_GET['page']) ) {
 $initial_page = ($page_number-1) * $limit;   
 
 // $searchResults=$obj->Query("SELECT * FROM `products` WHERE `product_name` LIKE '%{$_POST['search']}%'");
-$searchResults=$obj->Query("SELECT * FROM `products` JOIN images ON images.image_id=products.featured_image_id JOIN `sub_categories` ON sub_categories.sub_cat_id=products.sub_cat_id WHERE product_name LIKE '%{$_GET['search']}%' OR  `sub_cat_title` LIKE '%{$_GET['search']}%' OR `sub_cat_desc` LIKE '%{$_GET['search']}%'  GROUP BY products.pid LIMIT " . $initial_page . ',' . $limit);
+// $searchResults=$obj->Query("SELECT * FROM `products` JOIN images ON images.image_id=products.featured_image_id JOIN `sub_categories` ON sub_categories.sub_cat_id=products.sub_cat_id WHERE product_name LIKE '%{$_GET['search']}%' OR  `sub_cat_title` LIKE '%{$_GET['search']}%' OR `sub_cat_desc` LIKE '%{$_GET['search']}%'  GROUP BY products.pid LIMIT " . $initial_page . ',' . $limit);
+$searchResults=$obj->Query("SELECT * FROM `products` JOIN images ON images.image_id=products.featured_image_id WHERE indexing LIKE '%{$searchString}%' GROUP BY products.pid LIMIT " . $initial_page . ',' . $limit);
+
 $searchResultsCount=count($searchResults);
 echo "<center><h1>Searching for '{$_GET['search']}'</h1> <br><h2> Total Results: {$totalResults}</h2></center>";
 // print_r($searchResults);
