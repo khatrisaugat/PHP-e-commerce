@@ -17,7 +17,7 @@ $products=$obj->Select("products ". $joinStatement,"*","products.sub_cat_id",arr
     </div>
     <!-- Page Header End -->
 
-      <div class="container-fluid pt-5">
+    <div class="container-fluid pt-5">
         <div class="text-center mb-4">
             <h2 class="section-title px-5"><span class="px-2"><?=$products[0]['sub_cat_title'];?></span></h2>
         </div>
@@ -44,4 +44,4 @@ $products=$obj->Select("products ". $joinStatement,"*","products.sub_cat_id",arr
             </div>
             <?php endforeach;?>
         </div>
-      </div>
+    </div>
