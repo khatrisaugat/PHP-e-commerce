@@ -1,0 +1,22 @@
+# JPEG
+*.jpg
+*.jpeg
+*.jpe
+*.jif
+*.jfif
+*.jfi
+
+# Web P
+*.webp
+
+# Portable Network Graphics
+*.png
+
+# Scalable Vector Graphics
+*.svg
+*.svgz
+
+# Portable Document Format
+*.pdf
+#ignore vendor folder
+vendor/

@@ -1,29 +1,45 @@
 <?php
 session_start();
+require_once('./vendor/autoload.php');
+use Ecommerce\Config\Config;
+use Ecommerce\Config\Db;
 
-// if ($_SESSION['status']!=="Success") {
-// 	header("Location:login.php");
-// }
-require_once("config/config.php");
-require_once("config/db.php");
+//getting the base url
+$baseUrl=Config::getBaseUrl(__DIR__);
+//making a connection to the database
+$Db=Db::Instance();
 
-
-
-$url = isset($_GET['url']) ? $_GET['url'] : 'home';
+//check if the user is customer or admin
+$isAdmin= Config::isAdminView($_SERVER['REQUEST_URI']);
+$isRoutes= Config::isRoutes($_SERVER['REQUEST_URI']);
+if($isRoutes=='true'){
+    
+    if(isset($_GET['url'])){
+        require_once('./src/routes/Routes.php');
+    }
+}
+$url = isset($_GET['url']) && $_GET['url']!='admin' ? $_GET['url'] : 'home';
 
 $url = str_replace('.php', '', $url);
 
 $url .= '.php';
 
-$pagePath = root('pages/' . $url);
-
-require_once root('layouts/header.php');
-
-require_once root('layouts/sidebar.php');
-if (file_exists($pagePath) && is_file($pagePath)) {
-	require_once $pagePath;
-} else {
-
-	echo "<h1>Page not found 404</h1>";
+$pagePath="";
+// echo "main index";
+//if the user is admin then redirect to the admin page
+if($isAdmin=='true'){
+    $url=str_replace('admin/','',$url);
+    // echo $url;
+    $pathUptoPages=$baseUrl.'/admin/';
+    $pagePath = Config::root('view\admin\pages\\' . $url);
+    require_once(Config::root("view\admin\index.php"));
+    // echo $pagePath;
+    // die;
+    
+}else{
+    $pathUptoPages=$baseUrl.'/views/pages/';
+    $pagePath = Config::root('view\pages\\' . $url);
+    require_once(Config::root("view\index.php"));
 }
-require_once root('layouts/footer.php');
+
+// echo $baseUrl;

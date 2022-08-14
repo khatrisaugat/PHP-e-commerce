@@ -1,0 +1,16 @@
+{
+    "name": "saugat/ecommerce",
+    "description": "E-commerce website",
+    "autoload": {
+        "psr-4": {
+            "Ecommerce\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "khatrisaugat",
+            "email": "khatri.saugat55@gmail.com"
+        }
+    ],
+    "require": {}
+}
