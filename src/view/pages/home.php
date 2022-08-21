@@ -17,6 +17,17 @@ $subcategories=ProductController::getSubcategories();
 
     <!-- Categories Start -->
     <div class="container-fluid pt-5">
+                <?php
+                    if(isset($_SESSION['message'])){?>
+                        <div class="alert alert-success error">
+                    <?php
+                        echo $_SESSION['message'];
+                        unset($_SESSION['message']);
+                        ?>
+                        </div>
+                        <?php
+                    }
+                ?>
         <div class="row px-xl-5 pb-3">
             <?php
             foreach($subcategories as $subcategory){

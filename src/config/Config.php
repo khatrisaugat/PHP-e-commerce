@@ -74,7 +74,7 @@ class Config
         return $assetsurl;
     }
 
-    //indexing
+//indexing
 public static function Indexing(){
     $products=ProductController::getAllProducts();
     foreach ($products as $product) {

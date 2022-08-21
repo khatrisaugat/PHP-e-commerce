@@ -35,10 +35,17 @@ class UserModel{
         }
     }
     public function registerUser($data){
+        try{
+
+     
         $columns = implode(',', array_keys($data));
         $values="";
         $increment = 1;
-        foreach ($data as $value) {
+        foreach ($data as $key=>$value) {
+            if($value==''){
+                $_SESSION['error'] = $key." cannot be empty";
+                return false;
+            }
             $values .= '?';
             if ($increment < count($data)) {
                 $values .= ",";
@@ -46,25 +53,16 @@ class UserModel{
             $increment++;
         }
         echo 'INSERT INTO users('.$columns.') VALUES ('.$values.')';
-        // echo "<pre>";
-        // print_r($data);
-        // print_r(array_values($data));
-        // echo "</pre>";
         $result=$this->db->prepare('INSERT INTO users('.$columns.') VALUES ('.$values.')');
         $result->execute(array_values($data));
         if(AuthController::Userlogin($data['username'], $data['password']))
             return true;
         return false;
+    }catch(PDOException $e){
+        echo $_SESSION['error']=$e->getMessage();
+    }
     }
     public function findUserById($id){
-        // $this->db->query('SELECT * FROM users WHERE uid = :uid && ut_id = 2');
-        // $this->db->bind(':uid', $id);
-        // $row = $this->db->single();
-        // if($this->db->rowCount() > 0){
-        //     return true;
-        // }else{
-        //     return false;
-        // }
                 $sql='SELECT * FROM users WHERE uid = ? && ut_id = 2';
                 $bindValue=array($id);
                 //prepare the query

@@ -26,6 +26,9 @@ $url=Config::getRoute($_GET['url']);
         $logged_in=(new UserModel())->Userlogin($_POST['username'], md5($_POST['password']));
         if($logged_in==1){
             header('Location: '.$baseUrl.'/');
+        }else{
+            $_SESSION['error']='Invalid username or password';
+            header('Location: '.$baseUrl.'/login');
         }
     }
     //user logout route
@@ -44,6 +47,8 @@ $url=Config::getRoute($_GET['url']);
         }
         if($logged_in==1){
             header('Location: '.$baseUrl.'/');
+        }else{
+            header('Location: '.$baseUrl.'/register');
         }
     }
 //Login routes for user ended
@@ -272,7 +277,9 @@ $url=Config::getRoute($_GET['url']);
             unset($_POST['submit']);
         // print_r($_POST);
         // die;
+        
         ProductController::checkout($_POST);
+        $_SESSION['message']="Product checkout sucessfully";
         header('Location: '.$baseUrl.'/cart');
     }
 

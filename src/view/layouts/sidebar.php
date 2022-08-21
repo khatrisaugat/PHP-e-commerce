@@ -55,6 +55,7 @@ $categories=ProductController::getCategories();
                         <div class="navbar-nav mr-auto py-0">
                             <a href="<?=$baseUrl;?>" class="nav-item nav-link">Home</a>
                             <a href="<?=$baseUrl;?>/cart" class="nav-item nav-link">Shopping Cart</a>
+                            <a href="<?=$baseUrl;?>/order" class="nav-item nav-link">Orders</a>
                             <a href="<?=$baseUrl;?>/contact" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">

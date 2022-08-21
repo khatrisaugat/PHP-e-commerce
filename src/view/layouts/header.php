@@ -1,6 +1,11 @@
 <?php
+
+use Ecommerce\Controller\AuthController;
 use Ecommerce\Controller\ProductController;
-$count=ProductController::getCountOfCartProductsByUserId($_SESSION['uid']);
+if(AuthController::isUserLoggedIn())
+    $count=ProductController::getCountOfCartProductsByUserId($_SESSION['uid']);
+else 
+    $count=0;
 ?>
 <!DOCTYPE html>
 <html lang="en">

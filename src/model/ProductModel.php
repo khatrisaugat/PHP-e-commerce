@@ -41,14 +41,10 @@ class ProductModel{
                         $sql.=' '.$value['type'].' '.$value['operator'].' '.$value['value'].' ';
                     }else{
                     $sql.=$value['type'].' '.$value['value'].' ';
-                    // echo $sql;
                     }
                     }
             }
             }
-            // print_r($where);
-            // echo $sql;
-        // die;
         //prepare the query
         $preStatement = $this->db->prepare($sql);
         //execute the query
@@ -73,18 +69,12 @@ class ProductModel{
             }
             $increment++;
         }
-        // echo 'INSERT INTO '.$table.'('.$columns.') VALUES ('.$values.')';
-        // echo "<pre>";
-        // print_r($data);
-        // print_r(array_values($data));
-        // echo "</pre>";
         $result=$this->db->prepare('INSERT INTO '.$table.'('.$columns.') VALUES ('.$values.')');
         $result->execute(array_values($data));
         return $this->db->lastInsertId();
     }
     //update data
     public function Update($table,$data,$where){
-        // $columns = implode(',', array_keys($data));
         $values="";
         $increment = 1;
         $bindValue=array();
@@ -100,17 +90,11 @@ class ProductModel{
         $sql='UPDATE '.$table.' SET '.$values.' WHERE ';
 
         foreach($where as $w){
-            // print_r($w);
-            // die;
             if(isset($w['field']) && isset($w['operator']) && isset($w['value'])){
                 $sql.=$w['field'].' '.$w['operator'].'?';
                 array_push($bindValue,$w['value']);
             }
         }
-        // echo $sql;
-        // echo "<pre>";
-        // print_r($bindValue);
-        // echo "</pre>";
         $result=$this->db->prepare($sql);
         $result->execute(array_values($bindValue));
         return $result->rowCount();

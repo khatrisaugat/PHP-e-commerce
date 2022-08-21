@@ -102,6 +102,9 @@
         }
         button.parent().parent().find('input').val(newVal);
     });
+
+    //errror message hide
+    $('.alert-danger').delay(3000).fadeOut('slow');
     
 })(jQuery);
 

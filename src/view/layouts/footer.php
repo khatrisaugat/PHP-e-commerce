@@ -79,7 +79,7 @@
     <!-- Contact Javascript File -->
     <script src="<?=$baseUrl?>/assets/mail/jqBootstrapValidation.min.js"></script>
     <script src="<?=$baseUrl?>/assets/mail/contact.js"></script>
-
+    <script src="<?=$baseUrl?>/assets/js/validation.js"></script>
     <!-- Template Javascript -->
     <script src="<?=$baseUrl?>/assets/js/main.js"></script>
 </body>

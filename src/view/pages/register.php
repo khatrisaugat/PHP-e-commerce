@@ -2,25 +2,23 @@
     <div class="col-sm-12 d-flex justify-content-center min-vh-100 align-content-center ">
         <div class="col-sm-6">
             <h3 class="display-3 text-center">Register</h3>
-            <!-- <?php if (isset($_SESSION['message'])) { ?>
-                <div class="alert alert-success">
-                    <?= $_SESSION['message'];
-                    unset($_SESSION['message']);
-                    ?>
-                </div>
-            <?php } ?>
-            <?php if (isset($_SESSION['error'])) { ?>
-                <div class="alert alert-danger">
-                    <?= $_SESSION['message'];
-                    unset($_SESSION['message']);
-                    ?>
-                </div>
-            <?php } ?> -->
+            <?php
+                    if(isset($_SESSION['error'])){?>
+                        <div class="alert alert-danger error">
+                    <?php
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                        ?>
+                        </div>
+                        <?php
+                    }
+                ?>
             <div class="">
-                <form action="<?=$baseUrl?>/routes/registerUser" method="post">
+                <div class="error"></div>
+                <form action="<?=$baseUrl?>/routes/registerUser" method="post" onsubmit="return validate()">
                     <div class="row d-flex justify-content-center form-group ">
                         <label for="username">Username</label>
-                        <input type="text" name="username" placeholder="Enter your Username" class="form-control">
+                        <input type="text" name="username" placeholder="Enter your Username" class="form-control username_val">
                     </div>
                     <div class="row d-flex justify-content-center form-group ">
                         <label for="email">Email</label>
